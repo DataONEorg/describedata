@@ -4,7 +4,16 @@
 	xmlns:bibo="http://purl.org/ontology/bibo/" targetNamespace="http://purl.org/dryad/terms/">
 	
 	<!--DRAFT: This is a draft Dublin Core profile proposed for DataONE Member Nodes wishing to submit
-	    metadata using a Dublin Core profile.  -->
+	    metadata using a Dublin Core profile.  It was created by taking the Dryad metadata profile and 
+	    removing the things which are Dryad specific out of it.  The remaining terms are then annotated to 
+	    indicate how DataONE maps these into the SearchMetadata fields for discovery.  The non-indexed fields
+	    that are in the Dryad profile have been left for compatibility with Dryad profiles, full-text searching, 
+	    and possible future uses.  -->
+	<!--Questions: 
+	  1. How are multiple spatial terms handled? 
+	  2. How are multiple temporal terms handled? 
+	  3. Does adding dcterms:accessRights as optional make sense? 
+	  4. What (if anything) should be done with the core elements that aren't in this list? -->
 
 	<xs:import namespace="http://purl.org/dc/terms/" schemaLocation="dcterms.xsd"/>
 	<xs:import namespace="http://rs.tdwg.org/dwc/terms/"
@@ -14,20 +23,18 @@
 	<xs:element name="dataone_dc">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="dcterms:type"/>
-				<xs:element ref="dcterms:creator" maxOccurs="unbounded"/>
-				<xs:element ref="dcterms:dateSubmitted"/>
-				<xs:element ref="dcterms:available"/>
-				<xs:element ref="dcterms:title" maxOccurs="unbounded"/>
-				<xs:element ref="dcterms:identifier" maxOccurs="unbounded"/>
-				<xs:element ref="dcterms:description" minOccurs="0"/>
-				<xs:element ref="dcterms:subject" maxOccurs="unbounded"/>
-				<xs:element ref="dwc:scientificName" minOccurs="0" maxOccurs="unbounded"/>
-				<xs:element ref="dcterms:spatial" minOccurs="0" maxOccurs="unbounded"/>
-				<xs:element ref="dcterms:temporal" minOccurs="0" maxOccurs="unbounded"/>
-				<xs:element ref="dcterms:relation" minOccurs="0" maxOccurs="unbounded"/>
-				<xs:element ref="dcterms:references"/>
-				<xs:element ref="dcterms:hasPart" maxOccurs="unbounded"/>
+				<xs:element ref="dcterms:type"/>  <!--Typically "package" to indicate that this metadata applies to the entire data package -->
+				<xs:element ref="dcterms:creator" maxOccurs="unbounded"/>  <!-- Aggregated together into SearchMetadata.author -->
+				<xs:element ref="dcterms:dateSubmitted"/>  <!-- Indexed into SearchMetadata.pubDate; date that the work was first published -->
+				<xs:element ref="dcterms:available" minOccurs="0"/>  <!-- Not indexed by DataONE, but can be used to indicate the date the collection was made available -->
+				<xs:element ref="dcterms:title" maxOccurs="unbounded"/>  <!-- Title of the work; indexed into SearchMetadata.title -->
+				<xs:element ref="dcterms:identifier" minOccurs="0" maxOccurs="unbounded"/>  <!-- Actual identifiers are in the system metadata.  This list of  identifiers can be used for full-text searching of a list of identifiers for the work -->
+				<xs:element ref="dcterms:description" minOccurs="0"/>  <!-- Indexed into SearchMetadata.abstract -->
+				<xs:element ref="dcterms:subject" maxOccurs="unbounded"/>  <!-- Aggregated into SearchMetadata.keywords -->
+				<xs:element ref="dwc:scientificName" minOccurs="0" maxOccurs="unbounded"/>  <!-- Aggregated into SearchMetadata.scientificName  -->
+				<xs:element ref="dcterms:spatial" minOccurs="0" maxOccurs="unbounded"/>  <!-- Indexed to enable spatial searching in SearchMetadata.site -->
+				<xs:element ref="dcterms:temporal" minOccurs="0" maxOccurs="unbounded"/>  <!-- Not currently indexed by DataONE, but included for future work -->
+				<xs:element ref="dcterms:references" minOccurs="0" maxOccurs="unbounded"/>  <!-- Not currently indexed by DataONE, but included for furture work  -->
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
