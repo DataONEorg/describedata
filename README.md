@@ -1,4 +1,4 @@
 describedata
 ============
 
-In order to use data, you have to find data and understand it.
+This is a repository for personal work relating to metadata and data interoperability.  
