@@ -4,16 +4,26 @@
 	xmlns:bibo="http://purl.org/ontology/bibo/" targetNamespace="http://purl.org/dryad/terms/">
 	
 	<!--DRAFT: This is a draft Dublin Core profile proposed for DataONE Member Nodes wishing to submit
-	    metadata using a Dublin Core profile.  It was created by taking the Dryad metadata profile and 
-	    removing the things which are Dryad specific out of it.  The remaining terms are then annotated to 
-	    indicate how DataONE maps these into the SearchMetadata fields for discovery.  The non-indexed fields
-	    that are in the Dryad profile have been left for compatibility with Dryad profiles, full-text searching, 
-	    and possible future uses.  -->
-	<!--Questions: 
-	  1. How are multiple spatial terms handled? 
-	  2. How are multiple temporal terms handled? 
-	  3. Does adding dcterms:accessRights as optional make sense? 
-	  4. What (if anything) should be done with the core elements that aren't in this list? -->
+	    metadata using a Dublin Core profile.  It was initially created by taking the Dryad metadata profile and 
+	    removing the things which are Dryad-specific out of it, then addiing in (as optional) terms relevant to 
+	    MN's expressing interest in DC.  At present, relatively few terms are mapped to DataONE SearchMetadata
+	    fields, but this mapping will be extended based on input from users and DataONE preferences.  
+
+	    If no SearchMetadata field is indicated, this means that the term is not explictly indexed.  In some
+	    cases, future mappings are marked as PROPOSED.  Note, that all fields are available in the full-text 
+	    index for the metadata, so a full-text search through any of the DataONE search interfaces will match 
+	    regardless of the term indexing.  
+	    -->
+	<!--Issues in progress: 
+	    1. How should multiple spatial terms be handled by DataONE? 
+	    2. How should multiple temporal terms handled by DataONE? 
+	    3. PROPOSED: where indexed terms of type text are repeated, they should always be aggregated into the designated SearchMetadata
+	       field.  This allows a supplier, for example, to provide a description in multiple languages and have all of those indexed.
+	       This indexing may be imperfect, but it can provide at least some improvement in discovery for non-English users.  
+	    -->
+	<!--Revision History
+	    For further details see https://github.com/DataONEorg/describedata 
+	    -->
 
 	<xs:import namespace="http://purl.org/dc/terms/" schemaLocation="dcterms.xsd"/>
 	<xs:import namespace="http://rs.tdwg.org/dwc/terms/"
@@ -24,18 +34,34 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="dcterms:type"/>  <!--Typically "package" to indicate that this metadata applies to the entire data package -->
-				<xs:element ref="dcterms:creator" maxOccurs="unbounded"/>  <!-- Aggregated together into SearchMetadata.author -->
-				<xs:element ref="dcterms:dateSubmitted"/>  <!-- Indexed into SearchMetadata.pubDate; date that the work was first published -->
-				<xs:element ref="dcterms:available" minOccurs="0"/>  <!-- Not indexed by DataONE, but can be used to indicate the date the collection was made available -->
-				<xs:element ref="dcterms:title" maxOccurs="unbounded"/>  <!-- Title of the work; indexed into SearchMetadata.title -->
-				<xs:element ref="dcterms:identifier" minOccurs="0" maxOccurs="unbounded"/>  <!-- Actual identifiers are in the system metadata.  This list of  identifiers can be used for full-text searching of a list of identifiers for the work -->
-				<xs:element ref="dcterms:description" minOccurs="0"/>  <!-- Indexed into SearchMetadata.abstract -->
+				<xs:element ref="dcterms:creator" maxOccurs="unbounded"/>  <!-- Aggregated into SearchMetadata.author -->
+				<xs:element ref="dcterms:dateSubmitted"/>  <!-- Date work was first published, indexed in SearchMetadata.pubDate -->
+				<xs:element ref="dcterms:available" minOccurs="0"/>  <!-- Date the collection was made available -->
+				<xs:element ref="dcterms:title" maxOccurs="unbounded"/>  <!-- Indexed into SearchMetadata.title -->
+				<xs:element ref="dcterms:identifier" minOccurs="0" maxOccurs="unbounded"/>  <!-- See usage notes -->
+				<xs:element ref="dcterms:description" minOccurs="0"  maxOccurs="unbounded"/>  <!-- See usage notes; Indexed into SearchMetadata.abstract -->
+				<xs:element ref="dcterms:abstract" minOccurs="0" maxOccurs="unbounded"/>  <!-- See usage notes; PROPOSED: aggregate in SearchMetadata.abstract -->
 				<xs:element ref="dcterms:subject" maxOccurs="unbounded"/>  <!-- Aggregated into SearchMetadata.keywords -->
 				<xs:element ref="dwc:scientificName" minOccurs="0" maxOccurs="unbounded"/>  <!-- Aggregated into SearchMetadata.scientificName  -->
-				<xs:element ref="dcterms:spatial" minOccurs="0" maxOccurs="unbounded"/>  <!-- Indexed to enable spatial searching in SearchMetadata.site -->
-				<xs:element ref="dcterms:temporal" minOccurs="0" maxOccurs="unbounded"/>  <!-- Not currently indexed by DataONE, but included for future work -->
-				<xs:element ref="dcterms:references" minOccurs="0" maxOccurs="unbounded"/>  <!-- Not currently indexed by DataONE, but included for furture work  -->
+				<xs:element ref="dcterms:spatial" minOccurs="0" maxOccurs="unbounded"/>  <!-- Indexed in SearchMetadata.site -->
+				<xs:element ref="dcterms:temporal" minOccurs="0" maxOccurs="unbounded"/>  <!--  -->
+				<xs:element ref="dcterms:references" minOccurs="0" maxOccurs="unbounded"/>  <!--  -->
+				<xs:element ref="dcterms:hasPart" minOccurs="0" maxOccurs="unbounded"/>  <!-- See usage notes -->
+				<xs:element ref="dcterms:accessRights" minOccurs="0" maxOccurs="unbounded"/>  <!--  -->
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	<!--Usage notes:
+	    * &&&&& dateSubmitted versus system metadata submission date and usage.
+	    * &&&&& hasPart versus overall ORE envelope
+	    * dcterms:identifier: The metadata can specify the identifiers for component parts or the dataset itself.  This is included
+	      for compatibility with other uses for the metadata.  DataONE uses the identifiers as specified in the ORE map (package file).  
+	      Any identifiers listed under this term for the metadata file will be in the full-text index and visible when the metadata is
+	      viewed, but otherwise not used by DataONE.  
+	    * An organization may provide a description and/or an abstract.  A common practice in some communities is for the description 
+	      to be short (a sentence) and have a longer abstract.  Currently, DataONE only indexes the description field into 
+	      SearchMetadata.abstract, due to how Dryad constructs DC metadata.  
+	    * dcterms:hasPart: This term is included for compatibility with other uses of DC metadata, for display to the end user,
+	      and for MN internal use.  For DataONE processing, the parts of a dataset need to be specified in the ORE envelope.  
+	    -->
 </xs:schema>
