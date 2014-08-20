@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dwc="http://rs.tdwg.org/dwc/terms/"
-	xmlns:dcterms="http://purl.org/dc/terms/" xmlns="http://purl.org/dryad/terms/"
-	xmlns:bibo="http://purl.org/ontology/bibo/" targetNamespace="http://purl.org/dryad/terms/">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dcterms="http://purl.org/dc/terms/" 
+    xmlns:dwc="http://rs.tdwg.org/dwc/terms/"
+	xmlns:bibo="http://purl.org/ontology/bibo/" targetNamespace="http://purl.org/dryad/terms/"
+	>
 	
 	<!--DRAFT: This is a draft Dublin Core profile proposed for DataONE Member Nodes wishing to submit
 	    metadata using a Dublin Core profile.  It was initially created by taking the Dryad metadata profile and 
@@ -13,13 +16,17 @@
 	    cases, future mappings are marked as PROPOSED.  Note, that all fields are available in the full-text 
 	    index for the metadata, so a full-text search through any of the DataONE search interfaces will match 
 	    regardless of the term indexing.  
+	    
+	    For further information about DataONE Search.Metadata fields, see
+	    https://mule1.dataone.org/ArchitectureDocs-current/design/SearchMetadata.html 
 	    -->
 	<!--Issues in progress: 
 	    1. How should multiple spatial terms be handled by DataONE? 
 	    2. How should multiple temporal terms handled by DataONE? 
-	    3. PROPOSED: where indexed terms of type text are repeated, they should always be aggregated into the designated SearchMetadata
-	       field.  This allows a supplier, for example, to provide a description in multiple languages and have all of those indexed.
-	       This indexing may be imperfect, but it can provide at least some improvement in discovery for non-English users.  
+	    3. PROPOSED: Handle multiple instances of text terms (e.g. title, abstract, description).  Currently, where
+	       multiple instances of a term are permitted and indexed, that is done by having allowing multiple instances
+	       of a Search.metadata field.  An example use case here is to allow a a supplier to provide a description in 
+	       multiple languages and have all of those indexed.  
 	    -->
 	<!--Revision History
 	    For further details see https://github.com/DataONEorg/describedata 
@@ -37,12 +44,12 @@
 				<xs:element ref="dcterms:creator" maxOccurs="unbounded"/>  <!-- Aggregated into SearchMetadata.author -->
 				<xs:element ref="dcterms:dateSubmitted"/>  <!-- Date work was first published, indexed in SearchMetadata.pubDate -->
 				<xs:element ref="dcterms:available" minOccurs="0"/>  <!-- Date the collection was made available -->
-				<xs:element ref="dcterms:title" maxOccurs="unbounded"/>  <!-- Indexed into SearchMetadata.title -->
+				<xs:element ref="dcterms:title" minOccurs="0"/>  <!-- Indexed into SearchMetadata.title -->
 				<xs:element ref="dcterms:identifier" minOccurs="0" maxOccurs="unbounded"/>  <!-- See usage notes -->
-				<xs:element ref="dcterms:description" minOccurs="0"  maxOccurs="unbounded"/>  <!-- See usage notes; Indexed into SearchMetadata.abstract -->
-				<xs:element ref="dcterms:abstract" minOccurs="0" maxOccurs="unbounded"/>  <!-- See usage notes; PROPOSED: aggregate in SearchMetadata.abstract -->
-				<xs:element ref="dcterms:subject" maxOccurs="unbounded"/>  <!-- Aggregated into SearchMetadata.keywords -->
-				<xs:element ref="dwc:scientificName" minOccurs="0" maxOccurs="unbounded"/>  <!-- Aggregated into SearchMetadata.scientificName  -->
+				<xs:element ref="dcterms:description" minOccurs="0"/>  <!-- See usage notes; Indexed into SearchMetadata.abstract -->
+				<xs:element ref="dcterms:abstract" minOccurs="0"/>  <!-- See usage notes; PROPOSED: Index in SearchMetadata.abstract -->
+				<xs:element ref="dcterms:subject" maxOccurs="unbounded"/>  <!-- Indexed in (multi) SearchMetadata.keywords -->
+				<xs:element ref="dwc:scientificName" minOccurs="0" maxOccurs="unbounded"/>  <!-- Index in (multi) SearchMetadata.scientificName  -->
 				<xs:element ref="dcterms:spatial" minOccurs="0" maxOccurs="unbounded"/>  <!-- Indexed in SearchMetadata.site -->
 				<xs:element ref="dcterms:temporal" minOccurs="0" maxOccurs="unbounded"/>  <!--  -->
 				<xs:element ref="dcterms:references" minOccurs="0" maxOccurs="unbounded"/>  <!--  -->
