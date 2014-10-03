@@ -1,4 +1,4 @@
 describedata
 ============
 
-This is a repository for personal work relating to metadata and data interoperability.  
+This is a repository for work relating to metadata and data interoperability, particularly for metadata schema and tools used by DataONE.
