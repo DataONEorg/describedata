@@ -44,7 +44,7 @@ It is strongly suggested that one 'title', 'abstract', at least one 'creator',
   	elementFormDefault="qualified" 
   	attributeFormDefault="unqualified">
 
-	<xs:import namespace="http://purl.org/dc/terms/" schemaLocation="dcterms.xsd"/>
+	<xs:import namespace="http://purl.org/dc/terms/" schemaLocation="http://dublincore.org/schemas/xmls/qdc/dcterms.xsd"/>
 	<!--
 Root element declarations:
 -->
