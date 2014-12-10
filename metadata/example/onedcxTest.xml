@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://ns.dataone.org/metadata/schema/onedcx/v1.0" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ns.dataone.org/metadata/schema/onedcx/v1.0 http://ns.dataone.org/metadata/schema/onedcx/v1.0/onedcx_v1.0.xsd">
+  <simpleDc>
+    <dcterms:type>package</dcterms:type>
+    <dcterms:creator>Fred Smith</dcterms:creator>
+    <dcterms:title>One Dcx Science metadata title</dcterms:title>
+    <dcterms:identifier>pid221122</dcterms:identifier>
+    <dcterms:subject>Observational</dcterms:subject>
+    <dcterms:subject>Dinosaurs</dcterms:subject>
+  </simpleDc>
+  <dcTerms>
+    <dcterms:dateSubmitted>2014-09-15</dcterms:dateSubmitted>
+    <dcterms:available>2014-07-01</dcterms:available>
+    <dcterms:abstract>An observation of dinosaurs in the wild.  Not many were observed.</dcterms:abstract>
+    <dcterms:tableOfContents>Toc Entry 1; Toc Entry 2</dcterms:tableOfContents>
+    <dcterms:spatial>Netherlands</dcterms:spatial>
+    <dcterms:spatial xsi:type="dcterms:Box">northlimit=53.465827; eastlimit=7.210973; southlimit=50.753882; westlimit=3.370863; name=Netherlands;</dcterms:spatial>
+    <dcterms:temporal>2013</dcterms:temporal>
+    <dcterms:references>pid221121</dcterms:references>
+    <dcterms:hasPart>pid221122Data</dcterms:hasPart>
+    <dcterms:hasPart>pid221122Data2</dcterms:hasPart>
+    <dcterms:accessRights>Creative Commons</dcterms:accessRights>
+    <dcterms:modified>2014-11-03T00:00:00</dcterms:modified>
+  </dcTerms>
+  <otherElements>
+  	<lastName>Smith</lastName>
+  	<foo>T-Rex</foo>
+  	<foo>Dinosaur</foo>
+  </otherElements>
+</metadata>
